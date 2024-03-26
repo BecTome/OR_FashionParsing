@@ -23,3 +23,36 @@ python get_data.py
 
 Go to [notebooks/pycocoDemo.ipynb](notebooks/pycocoDemo.ipynb)
 
+**File Structure**
+
+```
+.
+├── data
+│   ├── annotations
+│   │   ├── train2020
+│   │   └── val2020
+│   └── images
+│       ├── train2020
+│       └── val2020
+├── notebooks
+└── src
+    └── utils
+```
+
+
+## Issues with installations
+
+- mmcv : error: [Errno 2] No such file or directory: '/usr/lib/cuda/bin/nvcc'
+
+```bash
+conda create --name openmmlab2 python=3.10.12 -y
+conda activate openmmlab2
+pip install torch==1.12.0 torchvision --extra-index-url https://download.pytorch.org/whl/cu113
+pip install openmim
+mim install mmcv==2.0.0rc4
+
+!rm -rf mmsegmentation
+!git clone https://github.com/open-mmlab/mmsegmentation.git 
+%cd mmsegmentation
+!pip install -e .
+```
