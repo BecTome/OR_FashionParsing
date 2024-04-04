@@ -1,1 +1,3 @@
-data
+mmsegmentation
+datasets
+__pycache__
