@@ -27,16 +27,15 @@ Go to [notebooks/pycocoDemo.ipynb](notebooks/pycocoDemo.ipynb)
 
 ```
 .
-├── data
-│   ├── annotations
-│   │   ├── train2020
-│   │   └── val2020
-│   └── images
-│       ├── train2020
-│       └── val2020
-├── notebooks
-└── src
-    └── utils
+├── datasets
+│   └── fashion
+│       ├── annotations
+│       │   ├── train2020
+│       │   └── val2020
+│       ├── images
+│       │   ├── test2020
+│       │   ├── train2020
+│       │   └── val2020
 ```
 
 
