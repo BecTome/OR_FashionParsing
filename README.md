@@ -38,6 +38,25 @@ Go to [notebooks/pycocoDemo.ipynb](notebooks/pycocoDemo.ipynb)
 │       │   └── val2020
 ```
 
+## Configuration Files
+They can be found in the [config_files](config_files) folder. They must be copied into the mmsegmentation/configs/fashion folder.
+
+To run them:
+    
+```bash
+python tools/train.py configs/fashion/<architecture>/<config_file>.py
+```
+
+For example:
+
+```bash
+python tools/train.py configs/fashion/deeplabv3/fashion_deeplabv3_192x192.py
+```
+
+In our case, we register the dataset in the mmseg registry. This is done in the [mmseg/datasets/fashion.py](mmseg/datasets/fashion.py) file. Important to add the import in the [mmseg/datasets/__init__.py](mmseg/datasets/__init__.py) file.
+
+Copy and paste both files in the mmseg/datasets folder.
+
 
 ## Issues with installations
 
