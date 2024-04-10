@@ -1,0 +1,34 @@
+# my_config.yaml
+# Config for training Fashionpedia segmentation model
+
+# Dataset configuration
+dataset_type: FashionpediaDataset
+data_root: /home/alberto/Documentos/GitHub/OR_FashionParsing/datasets/fashion
+train_dataloader: null  # If you're not using custom data loaders
+train:
+  type: ImageDataPipeLine
+  pipeline:
+    - type: LoadImageFromFile
+    - type: LoadAnnotations
+    - type: Resize
+      scale: (512, 512)
+    - type: RandomFlip
+    - type: Normalize
+val:
+  type: ImageDataPipeLine
+  pipeline:
+    - type: LoadImageFromFile
+    - type: LoadAnnotations
+    - type: Resize
+      scale: (512, 512)
+    - type: Normalize
+
+# Model configuration
+model:
+  type: hrnet
+  num_classes: 46  # Number of classes in Fashionpedia dataset
+  in_channels: 3
+
+# Training configuration
+train_cfg: null
+optim_wrapper: null  # If you're not using a custom optimization wrapper

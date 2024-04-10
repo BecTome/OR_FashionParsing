@@ -1,4 +1,11 @@
-mmsegmentation
+# mmsegmentation
 datasets
 aux_data
 __pycache__
+*.pth
+*.avi
+*.mp4
+*.jpg
+*.png
+*.txt
+mmsegmentation/fashion/
