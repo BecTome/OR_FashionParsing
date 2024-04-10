@@ -5,7 +5,7 @@ COLORS = [
     (216, 21, 138), (100, 0, 176), (171, 236, 47), (193, 137, 224), (36, 152, 214), (154, 165, 67), (73, 8, 110),
     (67, 161, 255), (167, 146, 11), (136, 126, 185), (44, 52, 10), (25, 33, 189), (73, 197, 184), (20, 165, 16),
     (48, 37, 106), (98, 213, 120), (21, 104, 190), (191, 106, 197), (142, 63, 109), (155, 22, 122), (43, 152, 125),
-    (128, 89, 85), (11, 1, 133), (126, 45, 174), (32, 111, 29), (55, 31, 198), (70, 250, 116), (216, 21, 138)
+    (128, 89, 85), (11, 1, 133), (126, 45, 174), (32, 111, 29), (55, 31, 198)#, (70, 250, 116), (216, 21, 138)
 ]
 
 # Be careful, these are the object ids but in the mask they are shifted by 1 (0 is for background)
@@ -29,5 +29,8 @@ annFile='{}/annotations/instances_attributes_{}.json'.format(dataDir,dataType)
 maskFolder='{}/annotations/{}/'.format(dataDir,dataType)
 imgFolder='{}/images/{}/'.format(dataDir,dataType)
 
-from pycocotools.coco import COCO
-db = COCO(annFile)
+meanRGB = [135.43535295, 125.5206132 , 122.8418554]
+stdRGB = [64.70508792, 63.73913779, 62.8355091]
+
+# from pycocotools.coco import COCO
+# db = COCO(annFile)
