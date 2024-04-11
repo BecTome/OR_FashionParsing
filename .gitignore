@@ -1,5 +1,6 @@
 # mmsegmentation
-datasets
+datasets/fashion
+datasets/others
 aux_data
 __pycache__
 *.pth
@@ -8,4 +9,5 @@ __pycache__
 *.jpg
 *.png
 *.txt
+last_checkpoint*
 mmsegmentation/fashion/

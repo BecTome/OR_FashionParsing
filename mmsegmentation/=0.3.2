@@ -1,0 +1,42 @@
+Collecting albumentations
+  Downloading albumentations-1.4.3.tar.gz (171 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6/171.6 kB 2.9 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy>=1.24.4 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from albumentations) (1.26.4)
+Requirement already satisfied: scipy>=1.10.0 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from albumentations) (1.12.0)
+Requirement already satisfied: scikit-image>=0.21.0 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from albumentations) (0.22.0)
+Requirement already satisfied: PyYAML in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from albumentations) (6.0.1)
+Requirement already satisfied: typing-extensions>=4.9.0 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from albumentations) (4.10.0)
+Collecting scikit-learn>=1.3.2 (from albumentations)
+  Downloading scikit_learn-1.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting opencv-python-headless>=4.9.0 (from albumentations)
+  Using cached opencv_python_headless-4.9.0.80-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+Requirement already satisfied: networkx>=2.8 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (3.2.1)
+Requirement already satisfied: pillow>=9.0.1 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (10.2.0)
+Requirement already satisfied: imageio>=2.27 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (2.34.0)
+Requirement already satisfied: tifffile>=2022.8.12 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (2024.2.12)
+Requirement already satisfied: packaging>=21 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (24.0)
+Requirement already satisfied: lazy_loader>=0.3 in /home/alberto/anaconda3/envs/openmmlab2/lib/python3.10/site-packages (from scikit-image>=0.21.0->albumentations) (0.3)
+Collecting joblib>=1.2.0 (from scikit-learn>=1.3.2->albumentations)
+  Downloading joblib-1.4.0-py3-none-any.whl.metadata (5.4 kB)
+Collecting threadpoolctl>=2.0.0 (from scikit-learn>=1.3.2->albumentations)
+  Using cached threadpoolctl-3.4.0-py3-none-any.whl.metadata (13 kB)
+Using cached opencv_python_headless-4.9.0.80-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (49.6 MB)
+Downloading scikit_learn-1.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 14.3 MB/s eta 0:00:00
+Downloading joblib-1.4.0-py3-none-any.whl (301 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 301.2/301.2 kB 13.6 MB/s eta 0:00:00
+Using cached threadpoolctl-3.4.0-py3-none-any.whl (17 kB)
+Building wheels for collected packages: albumentations
+  Building wheel for albumentations (pyproject.toml): started
+  Building wheel for albumentations (pyproject.toml): finished with status 'done'
+  Created wheel for albumentations: filename=albumentations-1.4.3-py3-none-any.whl size=137007 sha256=b07d8926518319d108ffd758908324952f2013f1e7c304ac78a18ac59b98f754
+  Stored in directory: /home/alberto/.cache/pip/wheels/c3/60/db/9fec8f5cb4bdf38e3f17f260b63a308dc192f4156f0366de65
+Successfully built albumentations
+Installing collected packages: threadpoolctl, opencv-python-headless, joblib, scikit-learn, albumentations
+Successfully installed albumentations-1.4.3 joblib-1.4.0 opencv-python-headless-4.9.0.80 scikit-learn-1.4.2 threadpoolctl-3.4.0
