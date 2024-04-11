@@ -2554,7 +2554,7 @@ class AddPascalCrop(BaseTransform):
             return results
         
         img = results['img']
-        mask = results['mask']
+        mask = results['gt_seg_map']
         
         img_pascal, mask_pascal = self.get_random_image_pascal()
         
@@ -2633,7 +2633,7 @@ class AddPascalCrop(BaseTransform):
         
         
         results['img'] = overlaid_image
-        results['mask'] = overlaid_mask        
+        results['gt_seg_map'] = overlaid_mask        
         return results
     
     def get_random_image_pascal(self):
