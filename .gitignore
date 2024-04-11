@@ -1,6 +1,7 @@
 # mmsegmentation
 datasets/fashion
 datasets/others
+datasets/VOCdevkit
 aux_data
 __pycache__
 *.pth

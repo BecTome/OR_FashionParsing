@@ -32,5 +32,5 @@ imgFolder='{}/images/{}/'.format(dataDir,dataType)
 meanRGB = [135.43535295, 125.5206132 , 122.8418554]
 stdRGB = [64.70508792, 63.73913779, 62.8355091]
 
-# from pycocotools.coco import COCO
-# db = COCO(annFile)
+from pycocotools.coco import COCO
+db = COCO(annFile)
