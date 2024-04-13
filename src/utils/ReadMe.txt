@@ -10,6 +10,6 @@ NOTE: if you encounter troubles installing cocoapi on windows, check here: https
 
 Then move "fashionpedia.py", which is in the same place as this readme, to the PythonAPI directory inside cocoapi. Finally, run it as following:
 
-python fashionpedia.py path/to/jason_file path/to/the_directory_you_want_to_save_segmentations
+python fashionpedia.py path/to/json_file path/to/the_directory_you_want_to_save_segmentations
 
 NOTE: there are two json files, one for train and the other for validation. Please use the validation data to evaluate and report your metrics.
