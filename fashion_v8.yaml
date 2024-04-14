@@ -1,4 +1,4 @@
-path: datasets/yolo_data
+path: C:\Users/ruper/OneDrive/Documents/GitHub/OR_FashionParsing/datasets/yolo_data
 train: 'images/train'
 val: 'images/val'
 
