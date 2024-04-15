@@ -1,7 +1,6 @@
 # mmsegmentation
-datasets/fashion
-datasets/others
-datasets/VOCdevkit
+cocoapi-master
+datasets
 aux_data
 __pycache__
 *.pth

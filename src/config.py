@@ -23,7 +23,7 @@ d_cats_bg = {0: 'background', 1: 'shirt, blouse', 2: 'top, t-shirt, sweatshirt',
              27: 'umbrella', 28: 'hood', 29: 'collar', 30: 'lapel', 31: 'epaulette', 32: 'sleeve', 33: 'pocket', 34: 'neckline', 35: 'buckle', 36: 'zipper', 
              37: 'applique', 38: 'bead', 39: 'bow', 40: 'flower', 41: 'fringe', 42: 'ribbon', 43: 'rivet', 44: 'ruffle', 45: 'sequin', 46: 'tassel'}
 
-dataDir='datasets/fashion/'
+dataDir='../datasets/fashion'
 dataType='train2020'
 annFile='{}/annotations/instances_attributes_{}.json'.format(dataDir,dataType)
 maskFolder='{}/annotations/{}/'.format(dataDir,dataType)
