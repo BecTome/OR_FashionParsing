@@ -2,11 +2,12 @@ import random
 import numpy as np
 import cv2
 import os
-import mmcv
-from mmcv.transforms import BaseTransform, TRANSFORMS
+# import mmcv
+# from mmcv.transforms import BaseTransform, TRANSFORMS
 
-@TRANSFORMS.register_module()# 
-class AddPascalCrop(BaseTransform):
+# @TRANSFORMS.register_module()# 
+# class AddPascalCrop(BaseTransform):
+class AddPascalCrop:
     def __init__(self, pascal_dataset_path = 'datasets/VOCdevkit/VOC2012', prob=0.5):
         super().__init__()
         self.dataset_path = pascal_dataset_path
@@ -20,31 +21,37 @@ class AddPascalCrop(BaseTransform):
         if random.random() > self.prob:
             return results
         
-        img = results['img']
+        image = results['img']
+        # If image has 1 channel, convert it to 3 channels
+        if len(image.shape) == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+        
         mask = results['mask']
         
-        img_pascal, mask_pascal = self.get_random_image_pascal()
-        
-        width, height = img.shape[:2]
-        width_pascal, height_pascal = img_pascal.shape[:2]
+        image_pascal, mask_pascal = self.get_random_image_pascal()
         
         
-        cropped_image_pascal = img_pascal.copy()
+        width, height = image.shape[:2]
+        width_pascal, height_pascal = image_pascal.shape[:2]
+        
+        
+        cropped_image_pascal = image_pascal.copy()
         mask_pascal = mask_pascal.astype(bool)
         cropped_image_pascal[~mask_pascal] = 0
         
-        # Crop the cropped img so that it has no black borders (rows and columns)
+        # Crop the cropped image so that it has no black borders (rows and columns)
         min_x = np.min(np.where(mask_pascal)[1])
         max_x = np.max(np.where(mask_pascal)[1])
         min_y = np.min(np.where(mask_pascal)[0])
         max_y = np.max(np.where(mask_pascal)[0])
-        
         cropped_image_pascal = cropped_image_pascal[min_y:max_y, min_x:max_x]
         mask_pascal = mask_pascal[min_y:max_y, min_x:max_x]
         width_pascal, height_pascal = cropped_image_pascal.shape[:2]
         
-
-         ### ROTATION ###
+        
+        
+        
+        ### ROTATION ###
         # Add some random rotation to the Pascal image
         angle = np.random.randint(-45, 45)
         cropped_image_pascal = self.rotate_image_without_cropping(cropped_image_pascal, angle)
@@ -56,7 +63,7 @@ class AddPascalCrop(BaseTransform):
 
         
         ### RESIZE ###
-        # Resize randomly the Pascal img
+        # Resize randomly the Pascal image
         min_scale = 0.8
         max_scale = min(width / width_pascal, height / height_pascal)
         
@@ -69,6 +76,16 @@ class AddPascalCrop(BaseTransform):
         mask_pascal = cv2.resize(mask_pascal.astype(np.uint8), (height_pascal, width_pascal))
         mask_pascal = mask_pascal.astype(bool)
         width_pascal, height_pascal = cropped_image_pascal.shape[:2]
+        
+        
+        # If the resulted image is larger than the original image, crop the extra pixels
+        if width_pascal > width or height_pascal > height:
+            x = (width_pascal - width) // 2
+            y = (height_pascal - height) // 2
+            cropped_image_pascal = cropped_image_pascal[x:x+width, y:y+height]
+            mask_pascal = mask_pascal[x:x+width, y:y+height]
+            width_pascal, height_pascal = cropped_image_pascal.shape[:2]
+        
         ##############################################
         
         ### OFFSET ###
@@ -80,25 +97,29 @@ class AddPascalCrop(BaseTransform):
         offset_x = np.random.randint(-x//3, x//3) if x > 0 else 0
         offset_y = np.random.randint(-y//2, y//2) if y > 0 else 0
         
-        x, y = x + offset_x, y + offset_y
+        x = max(0, x + offset_x)
+        y = max(0, y + offset_y)
+        
         ##############################################
+        # assert x >= 0 and y >= 0, "Invalid position"
+        # assert x + width_pascal <= width and y + height_pascal <= height, "Invalid position"
+        print("Offset x:", offset_x, "Offset y:", offset_y, "Rotation angle:", angle, "Scale:", scale, "Center x:", x, "Center y:", y)
         
+        # Superpose Pascal image on the original image at the calculated center position
+        overlaid_image = image.copy()
         
-        # Superpose Pascal img on the original img at the calculated center position
-        overlaid_image = img.copy()
-        
-        # Create a mask for the Pascal img where mask_pascal is True
+        # Create a mask for the Pascal image where mask_pascal is True
         pascal_mask = np.zeros_like(mask, dtype=bool)
         pascal_mask[x:x+width_pascal, y:y+height_pascal] = mask_pascal
         
-        # Overlay Pascal img on the original img at the calculated center position
-        overlaid_image = img.copy()
+        # Overlay Pascal image on the original image at the calculated center position
+        overlaid_image = image.copy()
+        print("Overlaid image shape:", overlaid_image.shape, "Cropped image shape:", cropped_image_pascal.shape, "Mask Pascal shape:", mask_pascal.shape, "Pascal mask shape:", pascal_mask.shape)
         overlaid_image[pascal_mask] = cropped_image_pascal[mask_pascal]
         
         overlaid_mask = mask.copy() 
-        overlaid_mask[pascal_mask] = 0   
-        
-        
+        overlaid_mask[pascal_mask] = 0
+
         results['img'] = overlaid_image
         results['mask'] = overlaid_mask        
         return results
@@ -142,6 +163,21 @@ class AddPascalCrop(BaseTransform):
         mask = np.all(mask == color, axis=2)    
         
         return mask
+    
+    @staticmethod
+    def rotate_image_without_cropping(img, angle):
+        h, w = img.shape[:2]
+        center = (w // 2, h // 2)
+        # Calculate the size of the new image
+        abs_cos, abs_sin = abs(np.cos(np.radians(angle))), abs(np.sin(np.radians(angle)))
+        bound_w = int(h * abs_sin + w * abs_cos)
+        bound_h = int(h * abs_cos + w * abs_sin)
+        # Adjust the rotation matrix to the center and apply the padding
+        rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
+        rotation_matrix[0, 2] += bound_w / 2 - center[0]
+        rotation_matrix[1, 2] += bound_h / 2 - center[1]
+        rotated_img = cv2.warpAffine(img, rotation_matrix, (bound_w, bound_h))
+        return rotated_img
     
     @staticmethod
     def rotate_image_without_cropping(img, angle):
