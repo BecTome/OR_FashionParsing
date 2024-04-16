@@ -2537,7 +2537,6 @@ class RandomDepthMix(BaseTransform):
         results['img'] = img
         return results
 
-
 @TRANSFORMS.register_module()# 
 class AddPascalCrop(BaseTransform):
     def __init__(self, pascal_dataset_path = '../datasets/VOCdevkit/VOC2012', prob=0.5):
