@@ -1,6 +1,6 @@
-path: fashion/
-train: 'images/train2020'
-val: 'images/val2020'
+path: C:\Users/ruper/OneDrive/Documents/GitHub/OR_FashionParsing/datasets/yolo_data
+train: 'images/train'
+val: 'images/val'
 
 # class names
 names:

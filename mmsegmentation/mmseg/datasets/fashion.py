@@ -24,4 +24,7 @@ classes = list(d_cats_bg.values())
 class FashionBG(BaseSegDataset):
   METAINFO = dict(classes = classes, palette = palette)
   def __init__(self, **kwargs):
+    # remove datasets from kwargs if it exists
+    #if 'datasets' in kwargs:
+    #  kwargs.pop('datasets')
     super().__init__(img_suffix='.jpg', seg_map_suffix='_seg.png', **kwargs)
