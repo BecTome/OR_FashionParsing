@@ -11,6 +11,18 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": "${command:pickArgs}"
+        },
+
+        {
+            "name": "Python: Train MM Segmentation Model",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/mmsegmentation/tools/train.py",
+            "cwd": "${workspaceFolder}/mmsegmentation",
+            "args": [
+                "mmseg/configs/fashion/deeplabv3plus/fashion_r50_40k_voc12_192x192_DATA_AUG.py"
+            ],
+            "console": "integratedTerminal"
         }
     ]
 }
