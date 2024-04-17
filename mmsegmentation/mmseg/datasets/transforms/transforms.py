@@ -2621,7 +2621,11 @@ class AddPascalCrop(BaseTransform):
         
         # Create a mask for the Pascal img where mask_pascal is True
         pascal_mask = np.zeros_like(mask, dtype=bool)
-        pascal_mask[x:x+width_pascal, y:y+height_pascal] = mask_pascal
+        try:
+            pascal_mask[x:x+width_pascal, y:y+height_pascal] = mask_pascal
+        except:
+            return results
+            
         
         # Overlay Pascal img on the original img at the calculated center position
         overlaid_image = img.copy()
