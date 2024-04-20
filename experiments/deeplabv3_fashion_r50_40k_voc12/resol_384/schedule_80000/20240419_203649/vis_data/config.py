@@ -1,7 +1,7 @@
 cfg = dict(
     crop_size=(
-        192,
-        192,
+        384,
+        384,
     ),
     data_preprocessor=dict(
         bgr_to_rgb=True,
@@ -21,7 +21,7 @@ cfg = dict(
     data_root='../datasets/fashion/',
     dataset_type='FashionBG',
     default_hooks=dict(
-        checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
+        checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
         logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
         param_scheduler=dict(type='ParamSchedulerHook'),
         sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -94,8 +94,8 @@ cfg = dict(
             pad_val=0,
             seg_pad_val=255,
             size=(
-                192,
-                192,
+                384,
+                384,
             ),
             std=[
                 64.70508792,
@@ -136,7 +136,7 @@ cfg = dict(
         dict(
             begin=0,
             by_epoch=False,
-            end=40000,
+            end=80000,
             eta_min=0.0001,
             power=0.9,
             type='PolyLR'),
@@ -182,9 +182,9 @@ cfg = dict(
         dict(type='PackSegInputs'),
     ],
     train_cfg=dict(
-        max_iters=40000, type='IterBasedTrainLoop', val_interval=4000),
+        max_iters=80000, type='IterBasedTrainLoop', val_interval=8000),
     train_dataloader=dict(
-        batch_size=16,
+        batch_size=4,
         dataset=dict(
             ann_file=0,
             data_prefix=dict(
@@ -209,7 +209,7 @@ cfg = dict(
                     keep_ratio=True,
                     ratio_range=(
                         0.5,
-                        2.0,
+                        2,
                     ),
                     scale=(
                         320,
@@ -219,8 +219,8 @@ cfg = dict(
                 dict(
                     cat_max_ratio=0.75,
                     crop_size=(
-                        192,
-                        192,
+                        384,
+                        384,
                     ),
                     type='RandomCrop'),
                 dict(prob=0.5, type='RandomFlip'),
@@ -248,7 +248,7 @@ cfg = dict(
             keep_ratio=True,
             ratio_range=(
                 0.5,
-                2.0,
+                2,
             ),
             scale=(
                 320,
@@ -256,8 +256,8 @@ cfg = dict(
             ),
             type='RandomResize'),
         dict(cat_max_ratio=0.75, crop_size=(
-            192,
-            192,
+            384,
+            384,
         ), type='RandomCrop'),
         dict(prob=0.5, type='RandomFlip'),
         dict(type='PackSegInputs'),
@@ -328,8 +328,8 @@ cfg = dict(
         ]),
     work_dir='./work_dirs/tutorial')
 crop_size = (
-    192,
-    192,
+    384,
+    384,
 )
 data_preprocessor = dict(
     bgr_to_rgb=True,
@@ -349,7 +349,7 @@ data_preprocessor = dict(
 data_root = '../datasets/fashion/'
 dataset_type = 'FashionBG'
 default_hooks = dict(
-    checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
+    checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
     logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -368,6 +368,7 @@ img_ratios = [
     1.5,
     1.75,
 ]
+launcher = 'none'
 load_from = 'checkpoints/deeplabv3plus_r50-d8_512x512_20k_voc12aug_20200617_102323-aad58ef1.pth'
 log_level = 'INFO'
 log_processor = dict(by_epoch=False)
@@ -421,8 +422,8 @@ model = dict(
         pad_val=0,
         seg_pad_val=255,
         size=(
-            192,
-            192,
+            384,
+            384,
         ),
         std=[
             64.70508792,
@@ -453,7 +454,7 @@ model = dict(
     test_cfg=dict(mode='whole'),
     train_cfg=dict(),
     type='EncoderDecoder')
-name = 'fashion_r50_40k_voc12_192x192'
+name = 'deeplabv3_fashion_r50_80k_voc12'
 norm_cfg = dict(requires_grad=True, type='BN')
 optim_wrapper = dict(
     clip_grad=None,
@@ -464,7 +465,7 @@ param_scheduler = [
     dict(
         begin=0,
         by_epoch=False,
-        end=40000,
+        end=80000,
         eta_min=0.0001,
         power=0.9,
         type='PolyLR'),
@@ -509,9 +510,9 @@ test_pipeline = [
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs'),
 ]
-train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=4000)
+train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=8000)
 train_dataloader = dict(
-    batch_size=16,
+    batch_size=4,
     dataset=dict(
         ann_file=0,
         data_prefix=dict(
@@ -535,7 +536,7 @@ train_dataloader = dict(
                 keep_ratio=True,
                 ratio_range=(
                     0.5,
-                    2.0,
+                    2,
                 ),
                 scale=(
                     320,
@@ -544,8 +545,8 @@ train_dataloader = dict(
                 type='RandomResize'),
             dict(
                 cat_max_ratio=0.75, crop_size=(
-                    192,
-                    192,
+                    384,
+                    384,
                 ), type='RandomCrop'),
             dict(prob=0.5, type='RandomFlip'),
             dict(type='PackSegInputs'),
@@ -572,7 +573,7 @@ train_pipeline = [
         keep_ratio=True,
         ratio_range=(
             0.5,
-            2.0,
+            2,
         ),
         scale=(
             320,
@@ -580,8 +581,8 @@ train_pipeline = [
         ),
         type='RandomResize'),
     dict(cat_max_ratio=0.75, crop_size=(
-        192,
-        192,
+        384,
+        384,
     ), type='RandomCrop'),
     dict(prob=0.5, type='RandomFlip'),
     dict(type='PackSegInputs'),
@@ -650,4 +651,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs/fashion_r50_40k_voc12_192x192/schedule_40000/resol_192'
+work_dir = './work_dirs/deeplabv3_fashion_r50_80k_voc12/schedule_80000/resol_384'

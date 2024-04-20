@@ -1,7 +1,7 @@
 _base_ = [
     '../../_base_/models/deeplabv3plus_r50-d8.py',
     '../../_base_/datasets/pascal_voc12.py', '../../_base_/default_runtime.py',
-    '../../_base_/schedules/schedule_160k.py'
+    '../../_base_/schedules/schedule_80k.py'
 ]
 name = 'deeplabv3_fashion_r50_80k_voc12'
 
@@ -52,7 +52,7 @@ cfg.train_pipeline = [
         # keymap={'image': 'img', 'gt_semantic_seg': 'seg_label'},  # Key mapping for input and output
    ),
     # If scale is a tuple, image_x follows U(ratio_range[0], ratio_range[1]) * scale[0] (analogous for y)
-    dict(type='RandomResize', scale=(640, 480), ratio_range=(0.5, 2.0), keep_ratio=True),
+    dict(type='RandomResize', scale=(320, 240), ratio_range=(0.5, 2), keep_ratio=True),
     dict(type='RandomCrop', crop_size=cfg.crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PackSegInputs')
@@ -60,7 +60,7 @@ cfg.train_pipeline = [
 
 cfg.test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize', scale=(640, 480), keep_ratio=True),
+    dict(type='Resize', scale=(320, 240), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
     dict(type='LoadAnnotations'),

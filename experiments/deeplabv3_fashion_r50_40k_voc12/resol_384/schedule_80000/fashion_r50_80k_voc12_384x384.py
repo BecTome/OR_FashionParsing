@@ -1,50 +1,7 @@
-2024/04/11 01:32:22 - mmengine - INFO - 
-------------------------------------------------------------
-System environment:
-    sys.platform: linux
-    Python: 3.10.12 (main, Jul  5 2023, 18:54:27) [GCC 11.2.0]
-    CUDA available: True
-    MUSA available: False
-    numpy_random_seed: 0
-    GPU 0: NVIDIA GeForce RTX 4070 Laptop GPU
-    CUDA_HOME: /usr/lib/cuda
-    NVCC: Not Available
-    GCC: gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-    PyTorch: 1.12.0+cu113
-    PyTorch compiling details: PyTorch built with:
-  - GCC 9.3
-  - C++ Version: 201402
-  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
-  - Intel(R) MKL-DNN v2.6.0 (Git Hash 52b5f107dd9cf10910aaa19cb47f3abf9b349815)
-  - OpenMP 201511 (a.k.a. OpenMP 4.5)
-  - LAPACK is enabled (usually provided by MKL)
-  - NNPACK is enabled
-  - CPU capability usage: AVX2
-  - CUDA Runtime 11.3
-  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
-  - CuDNN 8.3.2  (built against CUDA 11.5)
-  - Magma 2.5.2
-  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.3, CUDNN_VERSION=8.3.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DEDGE_PROFILER_USE_KINETO -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.12.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=OFF, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
-
-    TorchVision: 0.13.0+cu113
-    OpenCV: 4.9.0
-    MMEngine: 0.10.3
-
-Runtime environment:
-    cudnn_benchmark: True
-    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
-    dist_cfg: {'backend': 'nccl'}
-    seed: 0
-    Distributed launcher: none
-    Distributed training: False
-    GPU number: 1
-------------------------------------------------------------
-
-2024/04/11 01:32:22 - mmengine - INFO - Config:
 cfg = dict(
     crop_size=(
-        192,
-        192,
+        384,
+        384,
     ),
     data_preprocessor=dict(
         bgr_to_rgb=True,
@@ -64,7 +21,7 @@ cfg = dict(
     data_root='../datasets/fashion/',
     dataset_type='FashionBG',
     default_hooks=dict(
-        checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
+        checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
         logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
         param_scheduler=dict(type='ParamSchedulerHook'),
         sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -137,8 +94,8 @@ cfg = dict(
             pad_val=0,
             seg_pad_val=255,
             size=(
-                192,
-                192,
+                384,
+                384,
             ),
             std=[
                 64.70508792,
@@ -179,7 +136,7 @@ cfg = dict(
         dict(
             begin=0,
             by_epoch=False,
-            end=40000,
+            end=80000,
             eta_min=0.0001,
             power=0.9,
             type='PolyLR'),
@@ -225,9 +182,9 @@ cfg = dict(
         dict(type='PackSegInputs'),
     ],
     train_cfg=dict(
-        max_iters=40000, type='IterBasedTrainLoop', val_interval=4000),
+        max_iters=80000, type='IterBasedTrainLoop', val_interval=8000),
     train_dataloader=dict(
-        batch_size=16,
+        batch_size=4,
         dataset=dict(
             ann_file=0,
             data_prefix=dict(
@@ -252,7 +209,7 @@ cfg = dict(
                     keep_ratio=True,
                     ratio_range=(
                         0.5,
-                        2.0,
+                        2,
                     ),
                     scale=(
                         320,
@@ -262,8 +219,8 @@ cfg = dict(
                 dict(
                     cat_max_ratio=0.75,
                     crop_size=(
-                        192,
-                        192,
+                        384,
+                        384,
                     ),
                     type='RandomCrop'),
                 dict(prob=0.5, type='RandomFlip'),
@@ -291,7 +248,7 @@ cfg = dict(
             keep_ratio=True,
             ratio_range=(
                 0.5,
-                2.0,
+                2,
             ),
             scale=(
                 320,
@@ -299,8 +256,8 @@ cfg = dict(
             ),
             type='RandomResize'),
         dict(cat_max_ratio=0.75, crop_size=(
-            192,
-            192,
+            384,
+            384,
         ), type='RandomCrop'),
         dict(prob=0.5, type='RandomFlip'),
         dict(type='PackSegInputs'),
@@ -371,8 +328,8 @@ cfg = dict(
         ]),
     work_dir='./work_dirs/tutorial')
 crop_size = (
-    192,
-    192,
+    384,
+    384,
 )
 data_preprocessor = dict(
     bgr_to_rgb=True,
@@ -392,7 +349,7 @@ data_preprocessor = dict(
 data_root = '../datasets/fashion/'
 dataset_type = 'FashionBG'
 default_hooks = dict(
-    checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
+    checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
     logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -411,6 +368,7 @@ img_ratios = [
     1.5,
     1.75,
 ]
+launcher = 'none'
 load_from = 'checkpoints/deeplabv3plus_r50-d8_512x512_20k_voc12aug_20200617_102323-aad58ef1.pth'
 log_level = 'INFO'
 log_processor = dict(by_epoch=False)
@@ -464,8 +422,8 @@ model = dict(
         pad_val=0,
         seg_pad_val=255,
         size=(
-            192,
-            192,
+            384,
+            384,
         ),
         std=[
             64.70508792,
@@ -496,7 +454,7 @@ model = dict(
     test_cfg=dict(mode='whole'),
     train_cfg=dict(),
     type='EncoderDecoder')
-name = 'fashion_r50_40k_voc12_192x192'
+name = 'deeplabv3_fashion_r50_80k_voc12'
 norm_cfg = dict(requires_grad=True, type='BN')
 optim_wrapper = dict(
     clip_grad=None,
@@ -507,7 +465,7 @@ param_scheduler = [
     dict(
         begin=0,
         by_epoch=False,
-        end=40000,
+        end=80000,
         eta_min=0.0001,
         power=0.9,
         type='PolyLR'),
@@ -552,9 +510,9 @@ test_pipeline = [
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs'),
 ]
-train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=4000)
+train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=8000)
 train_dataloader = dict(
-    batch_size=16,
+    batch_size=4,
     dataset=dict(
         ann_file=0,
         data_prefix=dict(
@@ -578,7 +536,7 @@ train_dataloader = dict(
                 keep_ratio=True,
                 ratio_range=(
                     0.5,
-                    2.0,
+                    2,
                 ),
                 scale=(
                     320,
@@ -587,8 +545,8 @@ train_dataloader = dict(
                 type='RandomResize'),
             dict(
                 cat_max_ratio=0.75, crop_size=(
-                    192,
-                    192,
+                    384,
+                    384,
                 ), type='RandomCrop'),
             dict(prob=0.5, type='RandomFlip'),
             dict(type='PackSegInputs'),
@@ -615,7 +573,7 @@ train_pipeline = [
         keep_ratio=True,
         ratio_range=(
             0.5,
-            2.0,
+            2,
         ),
         scale=(
             320,
@@ -623,8 +581,8 @@ train_pipeline = [
         ),
         type='RandomResize'),
     dict(cat_max_ratio=0.75, crop_size=(
-        192,
-        192,
+        384,
+        384,
     ), type='RandomCrop'),
     dict(prob=0.5, type='RandomFlip'),
     dict(type='PackSegInputs'),
@@ -693,90 +651,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs/fashion_r50_40k_voc12_192x192/schedule_40000/resol_192'
-
-2024/04/11 01:32:25 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
-2024/04/11 01:32:25 - mmengine - INFO - Hooks will be executed in the following order:
-before_run:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(BELOW_NORMAL) LoggerHook                         
- -------------------- 
-before_train:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
-(VERY_LOW    ) CheckpointHook                     
- -------------------- 
-before_train_epoch:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
-(NORMAL      ) DistSamplerSeedHook                
- -------------------- 
-before_train_iter:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
- -------------------- 
-after_train_iter:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
-(BELOW_NORMAL) LoggerHook                         
-(LOW         ) ParamSchedulerHook                 
-(VERY_LOW    ) CheckpointHook                     
- -------------------- 
-after_train_epoch:
-(NORMAL      ) IterTimerHook                      
-(LOW         ) ParamSchedulerHook                 
-(VERY_LOW    ) CheckpointHook                     
- -------------------- 
-before_val:
-(VERY_HIGH   ) RuntimeInfoHook                    
- -------------------- 
-before_val_epoch:
-(NORMAL      ) IterTimerHook                      
- -------------------- 
-before_val_iter:
-(NORMAL      ) IterTimerHook                      
- -------------------- 
-after_val_iter:
-(NORMAL      ) IterTimerHook                      
-(NORMAL      ) SegVisualizationHook               
-(BELOW_NORMAL) LoggerHook                         
- -------------------- 
-after_val_epoch:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
-(BELOW_NORMAL) LoggerHook                         
-(LOW         ) ParamSchedulerHook                 
-(VERY_LOW    ) CheckpointHook                     
- -------------------- 
-after_val:
-(VERY_HIGH   ) RuntimeInfoHook                    
- -------------------- 
-after_train:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(VERY_LOW    ) CheckpointHook                     
- -------------------- 
-before_test:
-(VERY_HIGH   ) RuntimeInfoHook                    
- -------------------- 
-before_test_epoch:
-(NORMAL      ) IterTimerHook                      
- -------------------- 
-before_test_iter:
-(NORMAL      ) IterTimerHook                      
- -------------------- 
-after_test_iter:
-(NORMAL      ) IterTimerHook                      
-(NORMAL      ) SegVisualizationHook               
-(BELOW_NORMAL) LoggerHook                         
- -------------------- 
-after_test_epoch:
-(VERY_HIGH   ) RuntimeInfoHook                    
-(NORMAL      ) IterTimerHook                      
-(BELOW_NORMAL) LoggerHook                         
- -------------------- 
-after_test:
-(VERY_HIGH   ) RuntimeInfoHook                    
- -------------------- 
-after_run:
-(BELOW_NORMAL) LoggerHook                         
- -------------------- 
+work_dir = './work_dirs/deeplabv3_fashion_r50_80k_voc12/schedule_80000/resol_384'
