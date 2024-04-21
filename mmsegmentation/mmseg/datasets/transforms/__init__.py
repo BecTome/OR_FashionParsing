@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from .formatting import PackSegInputs
-from .loading import (LoadAnnotations, LoadBiomedicalAnnotation,
+from .loading import (LoadAnnotations, REDLoadAnnotations, LoadBiomedicalAnnotation,
                       LoadBiomedicalData, LoadBiomedicalImageFromFile,
                       LoadDepthAnnotation, LoadImageFromNDArray,
                       LoadMultipleRSImageFromFile, LoadSingleRSImageFromFile)
@@ -17,7 +17,7 @@ from .transforms import (CLAHE, AdjustGamma, Albu, BioMedical3DPad,
 
 # yapf: enable
 __all__ = [
-    'LoadAnnotations', 'RandomCrop', 'BioMedical3DRandomCrop', 'SegRescale',
+    'LoadAnnotations', 'REDLoadAnnotations' 'RandomCrop', 'BioMedical3DRandomCrop', 'SegRescale',
     'PhotoMetricDistortion', 'RandomRotate', 'AdjustGamma', 'CLAHE', 'Rerange',
     'RGB2Gray', 'RandomCutOut', 'RandomMosaic', 'PackSegInputs',
     'ResizeToMultiple', 'LoadImageFromNDArray', 'LoadBiomedicalImageFromFile',

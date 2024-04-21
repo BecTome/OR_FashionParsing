@@ -29,13 +29,14 @@ from .stare import STAREDataset
 from .synapse import SynapseDataset
 
 from .fashion import FashionBG
+# from .fashionRED import FashionRED
 
 # yapf: disable
 from .transforms import (CLAHE, AdjustGamma, Albu, BioMedical3DPad,
                          BioMedical3DRandomCrop, BioMedical3DRandomFlip,
                          BioMedicalGaussianBlur, BioMedicalGaussianNoise,
                          BioMedicalRandomGamma, ConcatCDInput, GenerateEdge,
-                         LoadAnnotations, LoadBiomedicalAnnotation,
+                         LoadAnnotations, REDLoadAnnotations, LoadBiomedicalAnnotation,
                          LoadBiomedicalData, LoadBiomedicalImageFromFile,
                          LoadImageFromNDArray, LoadMultipleRSImageFromFile,
                          LoadSingleRSImageFromFile, PackSegInputs,
@@ -53,7 +54,7 @@ __all__ = [
     'DRIVEDataset', 'HRFDataset', 'STAREDataset', 'DarkZurichDataset',
     'NightDrivingDataset', 'COCOStuffDataset', 'LoveDADataset',
     'MultiImageMixDataset', 'iSAIDDataset', 'ISPRSDataset', 'PotsdamDataset',
-    'LoadAnnotations', 'RandomCrop', 'SegRescale', 'PhotoMetricDistortion',
+    'LoadAnnotations', 'REDLoadAnnotations', 'RandomCrop', 'SegRescale', 'PhotoMetricDistortion',
     'RandomRotate', 'AdjustGamma', 'CLAHE', 'Rerange', 'RGB2Gray',
     'RandomCutOut', 'RandomMosaic', 'PackSegInputs', 'ResizeToMultiple',
     'LoadImageFromNDArray', 'LoadBiomedicalImageFromFile',
@@ -65,5 +66,5 @@ __all__ = [
     'MapillaryDataset_v2', 'Albu', 'LEVIRCDDataset',
     'LoadMultipleRSImageFromFile', 'LoadSingleRSImageFromFile',
     'ConcatCDInput', 'BaseCDDataset', 'DSDLSegDataset', 'BDD100KDataset',
-    'NYUDataset', 'HSIDrive20Dataset', 'FashionBG'
+    'NYUDataset', 'HSIDrive20Dataset', 'FashionBG', #'FashionRED'
 ]
