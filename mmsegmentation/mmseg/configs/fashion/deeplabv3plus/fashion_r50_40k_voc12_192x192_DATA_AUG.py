@@ -104,10 +104,10 @@ cfg.load_from = 'checkpoints/deeplabv3plus_r50-d8_512x512_20k_voc12aug_20200617_
 # Set up working dir to save files and logs.
 cfg.work_dir = './work_dirs/tutorial'
 
-cfg.train_cfg.max_iters = 200
-cfg.train_cfg.val_interval = 200
-cfg.default_hooks.logger.interval = 100
-cfg.default_hooks.checkpoint.interval = 200
+# cfg.train_cfg.max_iters = 200
+# cfg.train_cfg.val_interval = 200
+# cfg.default_hooks.logger.interval = 100
+# cfg.default_hooks.checkpoint.interval = 200
 # Set seed to facilitate reproducing the result
 cfg['randomness'] = dict(seed=0)
 
