@@ -7,6 +7,12 @@ You can download the data from the following links (Fashionpedia 2020):
 [Training data](https://s3.amazonaws.com/ifashionist-dataset/images/train2020.zip)
 [Validation and Test data](https://s3.amazonaws.com/ifashionist-dataset/images/val_test2020.zip)
 
+## Restore environment
+
+```bash
+conda env create -f environment.yml
+conda activate openmmlab2
+```
 
 ### Get Semantic Segmentation of Fashion Images
 
