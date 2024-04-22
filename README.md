@@ -39,7 +39,7 @@ Go to [notebooks/pycocoDemo.ipynb](notebooks/pycocoDemo.ipynb)
 ```
 
 ## Configuration Files
-They can be found in the [config_files](config_files) folder. They must be copied into the mmsegmentation/configs/fashion folder.
+They can be found in each of the `config.py` in [experiments](experiments) folder.
 
 To run them:
     
