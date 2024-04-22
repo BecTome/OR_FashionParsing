@@ -2,7 +2,7 @@ _base_ = [
     '../../_base_/models/upernet_vit-b16_ln_mln.py',
     '../../_base_/datasets/pascal_voc12.py', # Do not use pascal_voc12_aug.py; TypeError: BaseSegDataset.__init__() got an unexpected keyword argument 'datasets'
     '../../_base_/default_runtime.py',
-    '../../_base_/schedules/schedule_160k.py'
+    '../../_base_/schedules/schedule_40k.py'
 ]
 name = 'vit'
 
@@ -10,19 +10,27 @@ cfg = _base_
 
 # Since we use only one GPU, BN is used instead of SyncBN
 #cfg.norm_cfg = dict(type='BN', requires_grad=True)
-cfg.crop_size = (192, 192)
+cfg.crop_size = (384, 384)
 
 cfg.model.data_preprocessor.size = cfg.crop_size
 cfg.model.data_preprocessor.mean=[135.43535295, 125.5206132 , 122.8418554]
 cfg.model.data_preprocessor.std=[64.70508792, 63.73913779, 62.8355091]
+
+cfg.model.pretrained = 'pretrain/deit_small_patch16_224-cd65a155.pth'
+cfg.model.backbone.num_heads=6
+cfg.model.backbone.embed_dims=384
+cfg.model.backbone.drop_path_rate=0.1
+cfg.model.decode_head.num_classes=47
+cfg.model.decode_head.in_channels=[384, 384, 384, 384]
+cfg.model.neck = None
+cfg.model.auxiliary_head.num_classes=47
+cfg.model.auxiliary_head.in_channels=384
 
 cfg.model.data_preprocessor.size = cfg.crop_size
 #cfg.model.backbone.norm_cfg = cfg.norm_cfg
 #cfg.model.decode_head.norm_cfg = cfg.norm_cfg
 #cfg.model.auxiliary_head.norm_cfg = cfg.norm_cfg
 # modify num classes of the model in decode/auxiliary head
-cfg.model.decode_head.num_classes = 47
-cfg.model.auxiliary_head.num_classes = 47
 
 # Modify dataset type and path
 cfg.dataset_type = 'FashionBG'
@@ -103,10 +111,10 @@ cfg.load_from = './checkpoints/upernet_deit-s16_mln_512x512_160k_ade20k_20210621
 # Set up working dir to save files and logs.
 cfg.work_dir = './work_dirs/tutorial'
 
-# cfg.train_cfg.max_iters = 200
-# cfg.train_cfg.val_interval = 200
-# cfg.default_hooks.logger.interval = 100
-# cfg.default_hooks.checkpoint.interval = 200
+#cfg.train_cfg.max_iters = 200
+#cfg.train_cfg.val_interval = 200
+#cfg.default_hooks.logger.interval = 100
+#cfg.default_hooks.checkpoint.interval = 200
 
 # Set seed to facilitate reproducing the result
 cfg['randomness'] = dict(seed=0)
@@ -125,3 +133,4 @@ visualizer = dict(
 # print(f'Config:\n{cfg.pretty_text}')
 
 work_dir = f'./work_dirs/{name}/schedule_{_base_.train_cfg.max_iters}/resol_{_base_.crop_size[0]}' #{_base_.load_from.split()[0]}/
+
