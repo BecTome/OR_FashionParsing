@@ -1,7 +1,7 @@
 cfg = dict(
     crop_size=(
-        192,
-        192,
+        384,
+        384,
     ),
     data_preprocessor=dict(
         bgr_to_rgb=True,
@@ -50,7 +50,7 @@ cfg = dict(
             channels=256,
             concat_input=False,
             dropout_ratio=0.1,
-            in_channels=768,
+            in_channels=384,
             in_index=3,
             loss_decode=dict(
                 loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
@@ -61,9 +61,9 @@ cfg = dict(
         backbone=dict(
             act_cfg=dict(type='GELU'),
             attn_drop_rate=0.0,
-            drop_path_rate=0.0,
+            drop_path_rate=0.1,
             drop_rate=0.0,
-            embed_dims=768,
+            embed_dims=384,
             img_size=(
                 512,
                 512,
@@ -73,7 +73,7 @@ cfg = dict(
             mlp_ratio=4,
             norm_cfg=dict(eps=1e-06, type='LN'),
             norm_eval=False,
-            num_heads=12,
+            num_heads=6,
             num_layers=12,
             out_indices=(
                 2,
@@ -95,8 +95,8 @@ cfg = dict(
             pad_val=0,
             seg_pad_val=255,
             size=(
-                192,
-                192,
+                384,
+                384,
             ),
             std=[
                 64.70508792,
@@ -109,10 +109,10 @@ cfg = dict(
             channels=512,
             dropout_ratio=0.1,
             in_channels=[
-                768,
-                768,
-                768,
-                768,
+                384,
+                384,
+                384,
+                384,
             ],
             in_index=[
                 0,
@@ -131,22 +131,8 @@ cfg = dict(
                 6,
             ),
             type='UPerHead'),
-        neck=dict(
-            in_channels=[
-                768,
-                768,
-                768,
-                768,
-            ],
-            out_channels=768,
-            scales=[
-                4,
-                2,
-                1,
-                0.5,
-            ],
-            type='MultiLevelNeck'),
-        pretrained='pretrain/jx_vit_base_p16_224-80ecf9dd.pth',
+        neck=None,
+        pretrained='pretrain/deit_small_patch16_224-cd65a155.pth',
         test_cfg=dict(mode='whole'),
         train_cfg=dict(),
         type='EncoderDecoder'),
@@ -208,7 +194,7 @@ cfg = dict(
     train_cfg=dict(
         max_iters=40000, type='IterBasedTrainLoop', val_interval=4000),
     train_dataloader=dict(
-        batch_size=4,
+        batch_size=16,
         dataset=dict(
             ann_file=0,
             data_prefix=dict(
@@ -243,8 +229,8 @@ cfg = dict(
                 dict(
                     cat_max_ratio=0.75,
                     crop_size=(
-                        192,
-                        192,
+                        384,
+                        384,
                     ),
                     type='RandomCrop'),
                 dict(prob=0.5, type='RandomFlip'),
@@ -280,8 +266,8 @@ cfg = dict(
             ),
             type='RandomResize'),
         dict(cat_max_ratio=0.75, crop_size=(
-            192,
-            192,
+            384,
+            384,
         ), type='RandomCrop'),
         dict(prob=0.5, type='RandomFlip'),
         dict(type='PackSegInputs'),
@@ -352,8 +338,8 @@ cfg = dict(
         ]),
     work_dir='./work_dirs/tutorial')
 crop_size = (
-    192,
-    192,
+    384,
+    384,
 )
 data_preprocessor = dict(
     bgr_to_rgb=True,
@@ -402,7 +388,7 @@ model = dict(
         channels=256,
         concat_input=False,
         dropout_ratio=0.1,
-        in_channels=768,
+        in_channels=384,
         in_index=3,
         loss_decode=dict(
             loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
@@ -413,9 +399,9 @@ model = dict(
     backbone=dict(
         act_cfg=dict(type='GELU'),
         attn_drop_rate=0.0,
-        drop_path_rate=0.0,
+        drop_path_rate=0.1,
         drop_rate=0.0,
-        embed_dims=768,
+        embed_dims=384,
         img_size=(
             512,
             512,
@@ -425,7 +411,7 @@ model = dict(
         mlp_ratio=4,
         norm_cfg=dict(eps=1e-06, type='LN'),
         norm_eval=False,
-        num_heads=12,
+        num_heads=6,
         num_layers=12,
         out_indices=(
             2,
@@ -447,8 +433,8 @@ model = dict(
         pad_val=0,
         seg_pad_val=255,
         size=(
-            192,
-            192,
+            384,
+            384,
         ),
         std=[
             64.70508792,
@@ -461,10 +447,10 @@ model = dict(
         channels=512,
         dropout_ratio=0.1,
         in_channels=[
-            768,
-            768,
-            768,
-            768,
+            384,
+            384,
+            384,
+            384,
         ],
         in_index=[
             0,
@@ -483,22 +469,8 @@ model = dict(
             6,
         ),
         type='UPerHead'),
-    neck=dict(
-        in_channels=[
-            768,
-            768,
-            768,
-            768,
-        ],
-        out_channels=768,
-        scales=[
-            4,
-            2,
-            1,
-            0.5,
-        ],
-        type='MultiLevelNeck'),
-    pretrained='pretrain/jx_vit_base_p16_224-80ecf9dd.pth',
+    neck=None,
+    pretrained='pretrain/deit_small_patch16_224-cd65a155.pth',
     test_cfg=dict(mode='whole'),
     train_cfg=dict(),
     type='EncoderDecoder')
@@ -560,7 +532,7 @@ test_pipeline = [
 ]
 train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=4000)
 train_dataloader = dict(
-    batch_size=4,
+    batch_size=16,
     dataset=dict(
         ann_file=0,
         data_prefix=dict(
@@ -593,8 +565,8 @@ train_dataloader = dict(
                 type='RandomResize'),
             dict(
                 cat_max_ratio=0.75, crop_size=(
-                    192,
-                    192,
+                    384,
+                    384,
                 ), type='RandomCrop'),
             dict(prob=0.5, type='RandomFlip'),
             dict(type='PackSegInputs'),
@@ -629,8 +601,8 @@ train_pipeline = [
         ),
         type='RandomResize'),
     dict(cat_max_ratio=0.75, crop_size=(
-        192,
-        192,
+        384,
+        384,
     ), type='RandomCrop'),
     dict(prob=0.5, type='RandomFlip'),
     dict(type='PackSegInputs'),
@@ -699,4 +671,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs/vit/schedule_40000/resol_192'
+work_dir = './work_dirs/vit/schedule_40000/resol_384'

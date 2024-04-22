@@ -21,7 +21,7 @@ cfg = dict(
     data_root='../datasets/fashion/',
     dataset_type='FashionBG',
     default_hooks=dict(
-        checkpoint=dict(by_epoch=False, interval=16000, type='CheckpointHook'),
+        checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
         logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
         param_scheduler=dict(type='ParamSchedulerHook'),
         sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -50,7 +50,7 @@ cfg = dict(
             channels=256,
             concat_input=False,
             dropout_ratio=0.1,
-            in_channels=768,
+            in_channels=384,
             in_index=3,
             loss_decode=dict(
                 loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
@@ -61,9 +61,9 @@ cfg = dict(
         backbone=dict(
             act_cfg=dict(type='GELU'),
             attn_drop_rate=0.0,
-            drop_path_rate=0.0,
+            drop_path_rate=0.1,
             drop_rate=0.0,
-            embed_dims=768,
+            embed_dims=384,
             img_size=(
                 512,
                 512,
@@ -73,7 +73,7 @@ cfg = dict(
             mlp_ratio=4,
             norm_cfg=dict(eps=1e-06, type='LN'),
             norm_eval=False,
-            num_heads=12,
+            num_heads=6,
             num_layers=12,
             out_indices=(
                 2,
@@ -109,10 +109,10 @@ cfg = dict(
             channels=512,
             dropout_ratio=0.1,
             in_channels=[
-                768,
-                768,
-                768,
-                768,
+                384,
+                384,
+                384,
+                384,
             ],
             in_index=[
                 0,
@@ -131,22 +131,8 @@ cfg = dict(
                 6,
             ),
             type='UPerHead'),
-        neck=dict(
-            in_channels=[
-                768,
-                768,
-                768,
-                768,
-            ],
-            out_channels=768,
-            scales=[
-                4,
-                2,
-                1,
-                0.5,
-            ],
-            type='MultiLevelNeck'),
-        pretrained='pretrain/jx_vit_base_p16_224-80ecf9dd.pth',
+        neck=None,
+        pretrained='pretrain/deit_small_patch16_224-cd65a155.pth',
         test_cfg=dict(mode='whole'),
         train_cfg=dict(),
         type='EncoderDecoder'),
@@ -160,7 +146,7 @@ cfg = dict(
         dict(
             begin=0,
             by_epoch=False,
-            end=160000,
+            end=40000,
             eta_min=0.0001,
             power=0.9,
             type='PolyLR'),
@@ -206,9 +192,9 @@ cfg = dict(
         dict(type='PackSegInputs'),
     ],
     train_cfg=dict(
-        max_iters=160000, type='IterBasedTrainLoop', val_interval=16000),
+        max_iters=40000, type='IterBasedTrainLoop', val_interval=4000),
     train_dataloader=dict(
-        batch_size=4,
+        batch_size=16,
         dataset=dict(
             ann_file=0,
             data_prefix=dict(
@@ -373,7 +359,7 @@ data_preprocessor = dict(
 data_root = '../datasets/fashion/'
 dataset_type = 'FashionBG'
 default_hooks = dict(
-    checkpoint=dict(by_epoch=False, interval=16000, type='CheckpointHook'),
+    checkpoint=dict(by_epoch=False, interval=4000, type='CheckpointHook'),
     logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -402,7 +388,7 @@ model = dict(
         channels=256,
         concat_input=False,
         dropout_ratio=0.1,
-        in_channels=768,
+        in_channels=384,
         in_index=3,
         loss_decode=dict(
             loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
@@ -413,9 +399,9 @@ model = dict(
     backbone=dict(
         act_cfg=dict(type='GELU'),
         attn_drop_rate=0.0,
-        drop_path_rate=0.0,
+        drop_path_rate=0.1,
         drop_rate=0.0,
-        embed_dims=768,
+        embed_dims=384,
         img_size=(
             512,
             512,
@@ -425,7 +411,7 @@ model = dict(
         mlp_ratio=4,
         norm_cfg=dict(eps=1e-06, type='LN'),
         norm_eval=False,
-        num_heads=12,
+        num_heads=6,
         num_layers=12,
         out_indices=(
             2,
@@ -461,10 +447,10 @@ model = dict(
         channels=512,
         dropout_ratio=0.1,
         in_channels=[
-            768,
-            768,
-            768,
-            768,
+            384,
+            384,
+            384,
+            384,
         ],
         in_index=[
             0,
@@ -483,22 +469,8 @@ model = dict(
             6,
         ),
         type='UPerHead'),
-    neck=dict(
-        in_channels=[
-            768,
-            768,
-            768,
-            768,
-        ],
-        out_channels=768,
-        scales=[
-            4,
-            2,
-            1,
-            0.5,
-        ],
-        type='MultiLevelNeck'),
-    pretrained='pretrain/jx_vit_base_p16_224-80ecf9dd.pth',
+    neck=None,
+    pretrained='pretrain/deit_small_patch16_224-cd65a155.pth',
     test_cfg=dict(mode='whole'),
     train_cfg=dict(),
     type='EncoderDecoder')
@@ -513,7 +485,7 @@ param_scheduler = [
     dict(
         begin=0,
         by_epoch=False,
-        end=160000,
+        end=40000,
         eta_min=0.0001,
         power=0.9,
         type='PolyLR'),
@@ -558,10 +530,9 @@ test_pipeline = [
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs'),
 ]
-train_cfg = dict(
-    max_iters=160000, type='IterBasedTrainLoop', val_interval=16000)
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=4000)
 train_dataloader = dict(
-    batch_size=4,
+    batch_size=16,
     dataset=dict(
         ann_file=0,
         data_prefix=dict(
@@ -700,4 +671,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs/vit/schedule_160000/resol_192'
+work_dir = './work_dirs/vit/schedule_40000/resol_192'
